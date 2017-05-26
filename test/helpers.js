@@ -70,6 +70,7 @@ describe("helpers", function(){
       cfg.should.have.property("config")
       cfg.should.have.property("projectPath")
       cfg.should.have.property("publicPath")
+      cfg.publicPath.should.eql(path.join(cfg.projectPath, 'public'))
       done()
     })
 
@@ -79,6 +80,16 @@ describe("helpers", function(){
       cfg.should.have.property("projectPath")
       cfg.should.have.property("publicPath")
       cfg.publicPath.should.eql(cfg.projectPath)
+      done()
+    })
+
+    it("should be able to import a javascript file for complex configuration", function(done){
+      var cfg = helpers.setup(path.join(__dirname, "apps", "custom-config"))
+      cfg.should.have.property("config")
+      cfg.should.have.property("projectPath")
+      cfg.should.have.property("publicPath")
+      cfg.publicPath.should.eql(path.join(cfg.projectPath, 'public'))
+      cfg.config.globals.someFunction('bar').should.equal('foobar')
       done()
     })
 
